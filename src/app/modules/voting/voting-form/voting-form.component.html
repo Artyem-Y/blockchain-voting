@@ -1,0 +1,34 @@
+<form [formGroup]="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <div class="alert alert-danger alert-dark p-y-1" *ngIf="(f.submitted && f.form.invalid) || error">
+    {{this.error || 'Storage is not possible - please check your details.'}}
+  </div>
+
+  <fieldset class="form-group form-group-md required" [ngClass]="{ 'has-error': f.submitted && title?.invalid }">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" id="title" formControlName="title"
+           placeholder="Voting title"
+           required minlength="3" maxlength="50">
+    <div *ngIf="f.submitted && title?.invalid" class="form-message text-danger">
+      <div *ngIf="title?.errors.required">Title is required field</div>
+    </div>
+  </fieldset>
+
+  <form [formGroup]="form.controls.items">
+    <fieldset class="form-group form-group-md" formArrayName="votingItems">
+      <div *ngFor="let votingItem of votingItemControl.controls; let i=index">
+        <div [formGroupName]="i">
+          <input class="form-control"
+            type="text" placeholder="Voting option" formControlName="votingItem">
+        </div>
+        <div class="mt-2 mb-3">
+          <a class="btn btn-danger btn-sm mr-2" (click)="removeLink(i)">REMOVE</a>
+          <a class="btn btn-success btn-sm" (click)="addLink()">Add</a>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <button type="submit" [disabled]="isSubmitted" class="btn btn-lg btn-primary m-t-3">Create voting</button>
+  <button type="cancel" class="btn btn-lg btn-link m-t-3" (click)="cancel()">Cancel</button>
+</form>
+

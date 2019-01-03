@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4>Voting ...</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Votes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td (click)="goToVoting(id)">Voting 1</td>
+          <td id="voting-1"></td>
+        </tr>
+        <tr>
+          <td>Voting 2</td>
+          <td id="voting-2"></td>
+        </tr>
+        <tr>
+          <td>Voting 3</td>
+          <td id="voting-3"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--<input type="text" id="candidate"/>-->
+    <!--<a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>-->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button type="submit" [disabled]="isSubmitted" class="btn btn-lg btn-primary m-t-3"
+            (click)="makeVoting(item)"
+    >Make voting
+    </button>
+    <button type="cancel" class="btn btn-lg btn-link m-t-3" (click)="cancel()">Cancel</button>
+  </div>
+</div>

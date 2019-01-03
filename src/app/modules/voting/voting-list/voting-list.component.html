@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-2 mb-3 pull-right">
+    <button class="btn btn-lg btn-primary"
+            (click)="addNewVoting();">Add new voting
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div>
+
+      <h1>List of ...</h1>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th>Votes</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td (click)="goToVoting(id)">Voting 1</td>
+            <td id="voting-1"></td>
+          </tr>
+          <tr>
+            <td>Voting 2</td>
+            <td id="voting-2"></td>
+          </tr>
+          <tr>
+            <td>Voting 3</td>
+            <td id="voting-3"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--<input type="text" id="candidate"/>-->
+      <!--<a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>-->
+
+    </div>
+  </div>
+</div>
