@@ -13,13 +13,11 @@ contract Voting is Ownable {
 
   Dispatcher dispatcher;
 
-  uint8 public currenVoteNumber;
+  uint8 public currentVoteNumber;
   uint32[] private voteIndex;
   mapping(uint64 => Vote) public votes;
-
-  mapping(bytes32 => uint8) public votesReceived;
-  mapping (address => uint256) public usersList;
-  bytes32[] public optionsList;
+  mapping(uint64 => mapping(uint64 => uint8)) votesReceived;
+  uint64[] public voteList;
 
   // constructor(address _dispAddress) public payable {
   //     currenVoteNumber = 0;
@@ -29,42 +27,42 @@ contract Voting is Ownable {
 
   function createNewVoting(string memory title, uint64[] memory items) public {
     Vote memory vote;
-    currenVoteNumber++;
-    vote.id = currenVoteNumber;
+    currentVoteNumber++;
+    vote.id = currentVoteNumber;
     vote.title = title;
     vote.items = items;
-    votes[currenVoteNumber] = vote;
-    voteIndex.push(currenVoteNumber);
+    votes[currentVoteNumber] = vote;
+    voteIndex.push(currentVoteNumber);
   }
 
-//  function getVotingById(uint8 _id) public view returns(uint) {
-//    return votes[_id];
-//  }
+  function getVotingById(uint8 _id) public view returns(uint8 id, string memory title, uint64[] memory items) {
+    Vote storage vote = votes[_id];
+    return (vote.id, vote.title, vote.items);
+  }
 
   function getVoteIds() public view returns(uint32[] memory data) {
     return voteIndex;
   }
 
-  function makeVote(bytes32[] memory options) public {
-    optionsList = options;
-  }
+  function validItem(uint8 _id, uint64 item) public returns (bool) {
+    Vote storage vote = votes[_id];
+    voteList = vote.items;
 
-  function totalVotesFor(bytes32 item) view public returns (uint8) {
-    require(validItem(item));
-    return votesReceived[item];
-  }
-
-  function validItem(bytes32 item) view public returns (bool) {
-    for (uint i = 0; i < optionsList.length; i++) {
-      if (optionsList[i] == item) {
+    for (uint i = 0; i < voteList.length; i++) {
+      if (voteList[i] == item) {
         return true;
       }
     }
     return false;
   }
 
-  function voteForItem(bytes32 item) public {
-    require(validItem(item));
-    votesReceived[item] += 1;
+  function voteForItem(uint8 _id, uint64 item) public {
+    require(validItem(_id, item));
+    votesReceived[_id][item] += 1;
+  }
+
+  function totalVotesFor(uint8 _id, uint64 item) public returns (uint8) {
+    require(validItem(_id, item));
+    return votesReceived[_id][item];
   }
 }
